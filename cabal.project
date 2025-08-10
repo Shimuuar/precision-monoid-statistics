@@ -1,0 +1,26 @@
+-- List of packages which we use for solving
+packages:
+        precision.cabal
+
+-- OKA-flow
+source-repository-package
+    type:     git
+    location: https://github.com/Shimuuar/oka-flow
+    tag:      aff305d57b5ee236744d83d50a60fef23a7deef6
+    subdir:   oka-metadata
+source-repository-package
+    type:     git
+    location: https://github.com/Shimuuar/oka-flow
+    tag:      aff305d57b5ee236744d83d50a60fef23a7deef6
+    subdir:   oka-flow
+-- HDF5
+source-repository-package
+    type:     git
+    location: https://github.com/Shimuuar/HFD5
+    tag:      b3959dab33a7da7bb2292a23ad93d08089f4d988
+    subdir:   HDF5-direct/
+source-repository-package
+    type:     git
+    location: https://github.com/Shimuuar/HFD5
+    tag:      b3959dab33a7da7bb2292a23ad93d08089f4d988
+    subdir:   HDF5-hl/

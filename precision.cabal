@@ -1,0 +1,31 @@
+Cabal-Version:  3.0
+Name:           precision
+Version:        0.1
+Synopsis:       Experiments with precision of estimators
+
+common extensions
+  Default-extensions: NoPolyKinds
+                      --
+                    , NoFieldSelectors
+                    , OverloadedRecordDot
+                    , DuplicateRecordFields
+                      --
+                    , DerivingVia
+                    , LambdaCase
+                    , TupleSections
+                    , ViewPatterns
+                    , MultiWayIf
+                    , NumericUnderscores
+
+                
+Library
+  import:           extensions
+  hs-source-dirs:   src
+  Build-Depends:    base -any
+                  , oka-flow
+                  , oka-metadata
+                  , HDF5-hl
+                  , random   >=1.2 && < 1.3
+  Exposed-modules:
+    Precision.Flow
+
