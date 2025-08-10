@@ -20,12 +20,18 @@ common extensions
                 
 Library
   import:           extensions
+  Default-Language: GHC2021
   hs-source-dirs:   src
+  
   Build-Depends:    base -any
                   , oka-flow
                   , oka-metadata
                   , HDF5-hl
+                  , yaml
                   , random   >=1.2 && < 1.3
+                  , directory
+                  , filepath
+                  , effectful-core
   Exposed-modules:
     Precision.Flow
 

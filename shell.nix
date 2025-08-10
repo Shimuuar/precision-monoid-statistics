@@ -23,10 +23,10 @@ let
   #    libpython3 in ghci without LD_PRELOAD set. Compiled programs
   #    work fine.
   shell_hook = ''
-    export PYTHONPATH=''${PYTHONPATH:+''${PYTHONPATH}:}${builtins.toString ../.}/python;
-    export PYTHONHOME=${pkgs_py}
+    export PYTHONHOME=${pkgs_py}  
     alias PY=LD_PRELOAD=${pkgs.python3}/lib/libpython3.11.so
-    export MYPYPATH=''${MYPYPATH:+''${MYPYPATH}:}${builtins.toString ../.}/python;
+
+    export LD_LIBRARY_PATH=''${LD_LIBRARY_PATH:+''${LD_LIBRARY_PATH}:}${pkgs.hdf5}/lib
     '';
 in
 pkgs.mkShell {
