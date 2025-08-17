@@ -22,6 +22,8 @@ Library
   import:           extensions
   Default-Language: GHC2021
   hs-source-dirs:   src
+  -- FIXME: I need to pass python3 as dependency. Is there better way?
+  pkgconfig-depends: python3-embed
   
   Build-Depends:    base -any
                   , oka-flow

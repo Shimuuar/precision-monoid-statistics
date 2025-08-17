@@ -70,7 +70,7 @@ let
           lib.dontHaddock (noProfile (hs_self.callCabal2nix name (filterHaskell path) arg));
     in
       {
-        precision = callHS "precision" ../hask/precision {};
+        precision = callHS "precision" ../hask/precision {python3-embed=self.python3;};
       };
 in
 {

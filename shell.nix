@@ -12,7 +12,7 @@ let
       inline-python
       monoid-statistics
       #-- local --
-      #precision
+      precision
     ]);
   # Pythong stuff
   pkgs_py = pkgs.python3.withPackages (ps: with ps;
