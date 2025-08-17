@@ -41,8 +41,6 @@ runFlowHS flow = do
   runFlow ctx mempty flow
 
 
-
-
 -- | Configuration for 
 data FlowConfig = FlowConfig
   { n_cores :: !Int -- ^ Number of cores avala

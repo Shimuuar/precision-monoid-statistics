@@ -24,7 +24,7 @@ let
   #    work fine.
   shell_hook = ''
     export PYTHONHOME=${pkgs_py}  
-    alias PY=LD_PRELOAD=${pkgs.python3}/lib/libpython3.11.so
+    alias PY=LD_PRELOAD=${pkgs.python3}/lib/libpython3.12.so
 
     export LD_LIBRARY_PATH=''${LD_LIBRARY_PATH:+''${LD_LIBRARY_PATH}:}${pkgs.hdf5}/lib
     '';
@@ -33,6 +33,7 @@ pkgs.mkShell {
   shellHook        = shell_hook;
   buildInputs = with pkgs; [
     hdf5
+    pkg-config
     pkgs_py
   ];
 }
