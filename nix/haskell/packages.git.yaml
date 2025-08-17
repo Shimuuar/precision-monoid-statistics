@@ -1,0 +1,14 @@
+oka-flow:
+  repo:    oka-flow
+  subpath: oka-flow
+oka-metadata:
+  repo:    oka-flow
+  subpath: oka-metadata
+# ----
+HDF5-direct:
+  repo:       HDF5
+  subpath:    HDF5-direct
+  parameters: ["hdf5=pkgs.hdf5","hdf5_hl=null"]
+HDF5-hl:
+  repo:       HDF5
+  subpath:    HDF5-hl

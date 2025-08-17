@@ -1,5 +1,20 @@
 let
-  pkgs   = import <nixpkgs> {};
+  pkgs   = import <nixpkgs> {
+    overlays = [
+      (import ./nix/overlay.nix)
+    ];
+  };
+  # Haskell part
+  pkgs_hs = pkgs.haskell98.ghcWithPackages (ps: with ps;
+    [ oka-flow
+      oka-metadata
+      HDF5-hl
+      inline-python
+      monoid-statistics
+      #-- local --
+      #precision
+    ]);
+  # Pythong stuff
   pkgs_py = pkgs.python3.withPackages (ps: with ps;
     [ notebook
       jupyterlab
@@ -35,5 +50,6 @@ pkgs.mkShell {
     hdf5
     pkg-config
     pkgs_py
+    pkgs_hs
   ];
 }
