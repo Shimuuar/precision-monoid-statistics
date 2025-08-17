@@ -1,6 +1,6 @@
 -- List of packages which we use for solving
 packages:
-        precision.cabal
+        precision/*.cabal
 
 -- OKA-flow
 source-repository-package
