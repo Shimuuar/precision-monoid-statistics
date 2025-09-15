@@ -27,6 +27,8 @@ let
       mpmath
       matplotlib
       h5py
+      #
+      okaflow
     ]);
   # Export environment variables that we need
   #

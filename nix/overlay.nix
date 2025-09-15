@@ -72,6 +72,9 @@ let
       {
         precision = callHS "precision" ../hask/precision {python3-embed=self.python3;};
       };
+  pyOverrides = self: super: {
+    okaflow = self.callPackage (import ./python/okaflow.nix) {};
+  };
 in
 {
   haskell98 = super.haskell.packages.ghc98.extend
@@ -82,4 +85,7 @@ in
       //
       (haskOverrides hs_self hs_super)
     );
+  python312 = super.python312.override {
+    packageOverrides = pyOverrides;
+  };
 }

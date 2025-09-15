@@ -13,20 +13,19 @@ import GHC.Generics (Generic)
 
 import OKA.Flow
 import OKA.Flow.Eff
-import OKA.Flow.Resources
+import OKA.Flow.Core.Resources
 
 
 -- | Dataflow monad specialized to OKA analises
 type Flow' = Flow '[ProgConfigE]
 
-runFlowHS :: ResultSet r => Flow' r -> IO ()
+runFlowHS :: ToS r => Flow' r -> IO ()
 runFlowHS flow = do
   cfg <- readFlowConfig
   -- Resource for scheduler
-  res <- pure
-       =<< createResource (LockCoreCPU cfg.n_cores)
-       =<< createResource (LockMemGB   cfg.memGB)
-       =<< pure mempty
+  res <- createResource ( LockCoreCPU cfg.n_cores
+                        , LockMemGB   cfg.memGB
+                        )
   -- Execution context
   ctx <- do
     cwd <- getCurrentDirectory

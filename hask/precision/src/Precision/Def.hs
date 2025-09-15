@@ -67,3 +67,11 @@ evalMpMath xs = runPy . \case
   EvalMeanKBN   -> pyMean
   where
     pyMean = fromPy' =<< [pye| sum(mp.mpf(x) for x in xs_hs) / len(xs_hs) |]
+
+initMpmath :: IO ()
+initMpmath = do
+  initializePython
+  runPy [pymain|
+     import mpmath as mp
+     mp.mp.dps = 60
+     |]
