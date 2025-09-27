@@ -3,4 +3,4 @@ oka-flow:
   rev: "8ad7b2756426b2db569ec520775a04b6a52a6cd7"
 HDF5:
   git: "https://github.com/Shimuuar/HFD5"
-  rev: "b3959dab33a7da7bb2292a23ad93d08089f4d988"
+  rev: "34d72fe59dda93bc09abbc272163d96f5a88c17d"

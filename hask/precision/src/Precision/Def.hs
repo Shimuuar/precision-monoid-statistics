@@ -1,5 +1,7 @@
-{-# LANGUAGE DeriveAnyClass #-}
-{-# LANGUAGE QuasiQuotes    #-}
+{-# LANGUAGE DeriveAnyClass  #-}
+{-# LANGUAGE QuasiQuotes     #-}
+{-# LANGUAGE RoleAnnotations #-}
+{-# LANGUAGE TypeFamilies    #-}
 -- |
 module Precision.Def where
 
@@ -12,12 +14,17 @@ import Data.Monoid.Statistics
 import Data.Monoid.Statistics.Numeric
 import System.Random.MWC
 import System.Random.MWC.Distributions
+import System.FilePath ((</>))
 import GHC.Generics (Generic)
 import Python.Inline
 import Python.Inline.QQ
 
+import HDF5.HL        qualified as H5
+import HDF5.HL.Vector qualified as VH
+import HDF5.HL.Serialize (H5Serialize(..))
 
 import OKA.Flow
+import OKA.Flow.Tools
 import OKA.Metadata.Encoding
 import Precision.Flow
 
@@ -75,3 +82,28 @@ initMpmath = do
      import mpmath as mp
      mp.mp.dps = 60
      |]
+
+
+----------------------------------------------------------------
+-- Flow definition
+----------------------------------------------------------------
+
+type role AsHDF5Encoded representational
+
+-- | Encoding of outputs using HDF5 files
+newtype AsHDF5Encoded a = AsHDF5Encoded a
+
+instance (H5Serialize a) => FlowArgument (AsHDF5Encoded a) where
+  type AsRes (AsHDF5Encoded a) = Result a
+  parseFlowArguments = \case
+    Param p -> Right $ readOutput p
+    _       -> Left "Expecting single parameter"
+  parameterShape x _ = x
+
+instance (H5Serialize a) => FlowOutput (AsHDF5Encoded a) where
+  writeOutput dir (AsHDF5Encoded a) = H5.withCreateFile (dir </> "data.h5") H5.CreateTrunc $ \h5 -> do
+    h5Write h5 "dat" a
+
+instance (H5Serialize a) => FlowInput (AsHDF5Encoded a) where
+  readOutput dir = H5.withOpenFile (dir </> "data.h5") H5.OpenRO $ \h5 -> do
+    AsHDF5Encoded <$> h5Read h5 "dat"
