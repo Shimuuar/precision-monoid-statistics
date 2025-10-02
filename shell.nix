@@ -13,7 +13,7 @@ let
       monoid-statistics
       mwc-random
       #-- local --
-##      precision
+      precision
     ]);
   # Pythong stuff
   pkgs_py = pkgs.python3.withPackages (ps: with ps;

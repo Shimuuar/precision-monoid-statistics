@@ -8,8 +8,8 @@ mkDerivation {
   version = "0.1";
   src = fetchgit {
     url = "https://github.com/Shimuuar/HFD5";
-    sha256 = "1a9zwvyx9fnxb0s0nha8mvr6qrxnfscsk0my02z0n425znps4m3q";
-    rev = "34d72fe59dda93bc09abbc272163d96f5a88c17d";
+    sha256 = "1314hh6bvwl7sphwx6mmwl7hs01xc58v8fv227c1jyfv3m2c7p91";
+    rev = "fa43f4091a38d9214ad1587a9242c6ac3e3ff02c";
     fetchSubmodules = true;
   };
   postUnpack = "sourceRoot+=/HDF5-hl; echo source root reset to $sourceRoot";
