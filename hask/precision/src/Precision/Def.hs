@@ -10,6 +10,7 @@ module Precision.Def where
 import Control.Monad.ST
 import Data.Aeson   (FromJSON,ToJSON)
 import Data.Vector.Unboxed qualified as VU
+import Data.Vector.Generic qualified as VG
 import Data.Vector.Unboxed.Mutable qualified as MVU
 import Data.Word
 import Data.Monoid.Statistics
@@ -53,9 +54,12 @@ data Estimator
   deriving MetaEncoding via AsReadShow Estimator
   deriving (IsMeta,IsMetaPrim) via AsMeta '["prec","est"] Estimator
 
-newtype NSamples = NSamples Int
+data NSamples = NSamples
+  { size :: !Int -- ^ Size of vector fed to estimator
+  , samp :: !Int -- ^ Number of samples generated
+  }
   deriving stock (Show,Read,Eq,Generic)
-  deriving newtype MetaEncoding
+  deriving MetaEncoding via AsRecord NSamples
   deriving (IsMeta,IsMetaPrim) via AsMeta '["prec","N"] NSamples
 
 newtype PRNG = PRNG [Word32]
@@ -68,13 +72,13 @@ newtype PRNG = PRNG [Word32]
 --
 ----------------------------------------------------------------
 
-sample :: [Word32] -> Int -> Distribution -> VU.Vector Double
-sample seed size d = VU.create $ do
-  g <- restore $ toSeed $ VU.fromList seed
-  let gen = case d of
+sample :: GenIO -> Int -> Distribution -> IO (VU.Vector Double)
+sample g size d = do
+  let gen :: IO Double
+      gen = case d of
         Normal      μ σ -> normal      μ σ g
         Exponential λ   -> exponential λ   g
-  MVU.replicateM size gen
+  VU.unsafeFreeze =<< MVU.replicateM size gen
 
 evalHaskell :: VU.Vector Double -> Estimator -> Double
 evalHaskell xs = \case
@@ -108,19 +112,23 @@ newtype Sample = Sample (VH.VecHDF5 Res)
   deriving (FlowInput,FlowOutput,FlowArgument) via AsHDF5Encoded (VH.VecHDF5 Res)
 
 
+generateSample :: (Distribution,Estimator,NSamples,PRNG) -> () -> IO Sample
+generateSample (distrib,est,n,PRNG seed) () = do
+  initMpmath
+  g  <- restore $ toSeed $ VU.fromList seed
+  xs <- VG.replicateM n.samp $ do
+    samp  <- sample g n.size distrib
+    exact <- evalMpMath samp est
+    pure $! Res { est   = evalHaskell samp est
+                , exact = exact
+                }
+  pure $ Sample xs
+
+
 
 flowGenSample
   :: () -> Flow' (Result Sample)
-flowGenSample = liftHaskellFun "flow-gen-sample" () go where
-  go :: (Distribution,Estimator,NSamples,PRNG) -> () -> IO Sample
-  go (distrib,est,NSamples n,PRNG key) () = pure $ Sample $
-    let xs = sample key n distrib
-    in undefined
-  
-
-----------------------------------------------------------------
--- Flow definition
-----------------------------------------------------------------
+flowGenSample = liftHaskellFun "flow-gen-sample" (LockCPU 1) generateSample
 
 
 

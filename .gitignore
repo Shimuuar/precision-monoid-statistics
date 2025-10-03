@@ -3,3 +3,5 @@ dist-newstyle
 .ghc.environment
 .stack-work
 TAGS
+store
+config_flow.yaml
