@@ -4,4 +4,4 @@ dist-newstyle
 .stack-work
 TAGS
 store
-config_flow.yaml
+.ipynb_checkpoints

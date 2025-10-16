@@ -129,7 +129,12 @@ generateSample (distrib,est,n,PRNG seed) () = do
 
 flowGenSample
   :: () -> Flow' (Result Sample)
-flowGenSample = liftHaskellFun "flow-gen-sample" (LockCoreCPU 1) generateSample
+flowGenSample = liftHaskellFun "flow-gen-sample-hs" (LockCoreCPU 1) generateSample
+
+flowGenSampleExe
+  :: () -> Flow' (Result Sample)
+flowGenSampleExe
+  = liftExecutable "flow-gen-sample-exe" "flow-gen-prec" (LockCoreCPU 1) callStandardExe
 
 
 

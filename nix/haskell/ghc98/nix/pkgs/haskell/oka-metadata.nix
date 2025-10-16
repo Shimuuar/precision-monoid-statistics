@@ -8,8 +8,8 @@ mkDerivation {
   version = "0.1";
   src = fetchgit {
     url = "http://github.com/Shimuuar/oka-flow.git";
-    sha256 = "0xkgs53dzd7i02fcp5k0qfprbgq937ik91s5bdv96bxsa393lfc3";
-    rev = "a8ec241aa18239baad85a8fae6a8aaa5e4929bd3";
+    sha256 = "0q7qjrvr42bs2d7y3lx4wsk1v0qjsaya7vmgbi7h0vz43y29fn2i";
+    rev = "a39d29c5cead7f01d358c9eba2b1c05426601287";
     fetchSubmodules = true;
   };
   postUnpack = "sourceRoot+=/oka-metadata; echo source root reset to $sourceRoot";

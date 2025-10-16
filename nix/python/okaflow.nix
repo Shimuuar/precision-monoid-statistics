@@ -8,7 +8,7 @@ buildPythonPackage rec {
   '';
   src = builtins.fetchGit
     { url = "https://github.com/Shimuuar/oka-flow";
-      rev = "8ad7b2756426b2db569ec520775a04b6a52a6cd7";
+      rev = "a39d29c5cead7f01d358c9eba2b1c05426601287";
       ref = "master";
     };
   #----

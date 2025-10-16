@@ -18,5 +18,5 @@ gogo = do
   appendMeta $ PRNG []
   xs <- forM [1 .. 10] $ \t -> scopeMeta $ do
     appendMeta $ Normal 0 t
-    flowGenSample ()
+    flowGenSampleExe ()
   stdJupyter ["notebook/test.ipynb"] xs

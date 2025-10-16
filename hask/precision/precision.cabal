@@ -42,3 +42,14 @@ Library
   Exposed-modules:
     Precision.Flow
     Precision.Def
+
+executable flow-gen-prec
+  import:           extensions
+  Default-Language: GHC2021
+  hs-source-dirs:   exe
+  main-is:          flow-gen-prec.hs
+  Build-Depends:    base -any
+                  , precision
+                  , oka-flow
+                  , oka-metadata
+  

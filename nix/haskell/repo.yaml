@@ -1,6 +1,6 @@
 oka-flow:
   git: "http://github.com/Shimuuar/oka-flow.git"
-  rev: "a8ec241aa18239baad85a8fae6a8aaa5e4929bd3"
+  rev: "a39d29c5cead7f01d358c9eba2b1c05426601287"
 HDF5:
   git: "https://github.com/Shimuuar/HFD5"
   rev: "fa43f4091a38d9214ad1587a9242c6ac3e3ff02c"
