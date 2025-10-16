@@ -28,6 +28,7 @@ import HDF5.HL.Serialize (H5Serialize(..))
 
 import OKA.Flow
 import OKA.Flow.Tools
+import OKA.Flow.Core.Resources
 import OKA.Metadata.Encoding
 import OKA.Metadata
 import Precision.Flow
@@ -128,7 +129,7 @@ generateSample (distrib,est,n,PRNG seed) () = do
 
 flowGenSample
   :: () -> Flow' (Result Sample)
-flowGenSample = liftHaskellFun "flow-gen-sample" (LockCPU 1) generateSample
+flowGenSample = liftHaskellFun "flow-gen-sample" (LockCoreCPU 1) generateSample
 
 
 
