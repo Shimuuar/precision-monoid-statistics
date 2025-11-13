@@ -85,6 +85,9 @@ in
       //
       (haskOverrides hs_self hs_super)
     );
+  python313 = super.python313.override {
+    packageOverrides = pyOverrides;
+  };
   python312 = super.python312.override {
     packageOverrides = pyOverrides;
   };
