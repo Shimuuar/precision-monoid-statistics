@@ -1,9 +1,18 @@
 let
-  pkgs   = import <nixpkgs> {
-    overlays = [
-      (import ./nix/overlay.nix)
-    ];
-  };
+  pkgs =
+    let
+      rev     = "7e297ddff44a3cc93673bb38d0374df8d0ad73e4";
+      sha256  = "sha256:1rxn634v8im87na9ig2dg8nywrb5qhz7iybw4bbbvfcikq5j0673";
+    in
+      import (builtins.fetchTarball {
+        inherit sha256;
+        name   = "nixos-25.05";
+        url    = "https://github.com/nixos/nixpkgs/archive/${rev}.tar.gz";
+      }) {
+        overlays = [
+          (import ./nix/overlay.nix)
+        ];
+      };
   # Haskell part
   pkgs_hs = pkgs.haskell98.ghcWithPackages (ps: with ps;
     [ oka-flow
